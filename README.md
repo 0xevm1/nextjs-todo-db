@@ -1,6 +1,6 @@
 TODO app leveraging Next.js
 
-Using React, Typescript, Node.JS, SQL
+Using React, Typescript, Node.JS, SQL and Tailwinds compiled CSS
 
 Shows to do list, sortable by date, priority and a partial match of description
 
