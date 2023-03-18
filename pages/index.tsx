@@ -9,53 +9,68 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   const [todos, setTodos] = useState([]);
+  const [state, setState] = useState("");
+  const [description, setDescription] = useState("");
 
-  let state = "due";
+  let page = 1;
 
   useEffect(() => {
     const fetchList = async () => {
-      const res = await fetch('/api/todo?page=0&limit=10&sort=due');
+      const res = await fetch('/api/todo?page=1&sort=due');
       const data = await res.json();
-      state = "due";
+      setState("due");
       setTodos(data);
     };
     fetchList();
   }, []);
 
   const priorityFetch = (append: boolean) => {
+    append==false?page = 1:page; //reset page when necessary
+    setState("priority");
     const fetchList = async () => {
-      const res = await fetch('/api/todo?page=0&limit=10&sort=priority');
+      const res = await fetch('/api/todo?page='+page+'&sort=priority');
       const data = await res.json();
-      state = "priority";
       setTodos(data);
     };
     fetchList();
   }
 
   const dateFetch = (append: boolean) => {
+    append==false?page = 1:page; //reset page when necessary
+    setState("due");
     const fetchList = async () => {
-      const res = await fetch('/api/todo?page=0&limit=10&sort=due');
+      const res = await fetch('/api/todo?page='+page+'&sort=due');
       const data = await res.json();
-      state = "date";
       setTodos(data);
     };
     fetchList();
   }
 
-  const descFetch = (description, append: boolean) => {
+  const descFetch = (desc, append: boolean) => {
+    append==false?page = 1:page; //reset page when necessary
+    setState("desc");
+    setDescription(desc);
     const fetchList = async () => {
-      const res = await fetch('/api/todo?page=0&limit=10&sort=due&like='+description);
+      const res = await fetch('/api/todo?page='+page+'&sort=due&like='+description);
       const data = await res.json();
-      state = "desc";
       setTodos(data);
     };
     fetchList();
   }
 
-  const fetchState = () => {
+  const fetchState = (desc) => {
+    page++;
+    console.log(state);
     switch (state){
       case "due":
         dateFetch(true);
+        break;
+      case "priority":
+        priorityFetch(true);
+        break;
+      case "desc":
+        descFetch(desc, true);
+        break;
     }
   }
 
@@ -91,7 +106,7 @@ export default function Home() {
             <button className="rounded bg-blue-300 m-2 p-1" onClick={() => dateFetch(false)}>Date</button>
             <form className="rounded m-2 p-1">
               <label>
-                <input type="text"
+                <input id="input" type="text"
                      onChange={(e) => descFetch( e.target.value, false)}/>
               </label>
             </form>
@@ -104,7 +119,7 @@ export default function Home() {
             ))}
           </ul>
           {todos?.length > 9 &&
-              <button className="rounded bg-yellow-200 m-2 p-1" onClick={fetchState}>Load More</button>
+              <button className="rounded bg-yellow-200 m-2 p-1" onClick={() => fetchState(description)}>Load More</button>
           }
         </div>
       </main>

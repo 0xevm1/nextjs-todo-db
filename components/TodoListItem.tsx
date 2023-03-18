@@ -2,7 +2,6 @@ import React from 'react';
 import dayjs from 'dayjs';
 
 const TodoListItem = ({ todo }) => {
-    console.log(todo);
     return (
         <li key={todo.id} className="relative items-center justify-between px-2 py-6 border-b bg-white rounded m-3">
             <div>

@@ -29,14 +29,19 @@ export default async function handler(
   });
 
   const query = req.query;
-  const { page, limit, sort, like } = query;
+  const { page, sort, like } = query;
+
+  const limit = 10 * page;
+
+  //let paging = limit * page;
+  //let between = paging > 10?`and between ` + paging - limit + ' and ' + paging:'';
 
   let order = sort?sort:'due';
 
   const items = like?
-                  await db.all('select * from todos where description like \'%' + like + '%\' order by ' + order + ' desc limit 10')
+                  await db.all('select * from todos where description like \'%' + like + '%\' order by ' + order + ' desc limit ' + limit)
                 :
-                  await db.all('select * from todos order by ' + order + ' desc limit 10');
+                  await db.all('select * from todos order by ' + order + ' desc limit ' + limit);
 
   res.status(200).json(items);
 
