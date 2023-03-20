@@ -1,4 +1,4 @@
-TODO app leveraging Next.js
+# TODO app leveraging Next.js
 
 Using React, Typescript, Node.JS, SQL and Tailwinds compiled CSS
 
@@ -8,6 +8,7 @@ Loads from a SQL database that has 20 items, will display 10 and allow loading m
 
 Utilizes client and server side implementation. Client calls server, server calls SQL database and returns result to the client.
 
+![Dev Environment Screenshot](https://github.com/0xevm1/nextjs-todo-db/blob/main/todolist.png)
 
 
 ## Getting Started
