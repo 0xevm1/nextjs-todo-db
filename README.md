@@ -9,6 +9,7 @@ Loads from a SQL database that has 20 items, will display 10 and allow loading m
 Utilizes client and server side implementation. Client calls server, server calls SQL database and returns result to the client.
 
 
+
 ## Getting Started
 
 First, run the development server:
